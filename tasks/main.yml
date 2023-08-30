@@ -5,31 +5,17 @@
   register: qemu_guest_agent_device
   when: qemu_guest_agent_state == "detect"
 
-- name: Set qemu-guest-agent state
-  ansible.builtin.set_fact:
-    qemu_guest_agent_state_internal: >-
-      {{
-      'present' if (qemu_guest_agent_state == 'present' or
-      (qemu_guest_agent_device.stat.exists is defined and
-      qemu_guest_agent_device.stat.exists == true))
-      else
-      ('latest' if (qemu_guest_agent_state == 'latest')
-      else
-      ('absent' if (qemu_guest_agent_state == 'absent' or
-      (qemu_guest_agent_device.stat.exists is defined and
-      qemu_guest_agent_device.stat.exists == false))
-      else ''))
-      }}
-
 - name: Ensure qemu-guest-agent is installed
   ansible.builtin.apt:
     cache_valid_time: 900
     name: "qemu-guest-agent"
-    state: "{{ qemu_guest_agent_state_internal }}"
+    state: "{{ 'latest' if qemu_guest_agent_state == 'latest' else 'present' }}"
   become: true
   when: >-
-    qemu_guest_agent_state_internal == 'present'
-    or qemu_guest_agent_state_internal == 'latest'
+    qemu_guest_agent_state == "present"
+    or qemu_guest_agent_state == "latest"
+    or (qemu_guest_agent_device.stat.exists is defined
+    and qemu_guest_agent_device.stat.exists is true)
 
 - name: Ensure qemu-guest-agent is not installed
   ansible.builtin.package:
@@ -37,4 +23,6 @@
     state: "absent"
   become: true
   when: >-
-    qemu_guest_agent_state_internal == "absent"
+    qemu_guest_agent_state == "absent" or
+    (qemu_guest_agent_device.stat.exists is defined
+    and qemu_guest_agent_device.stat.exists is false)
