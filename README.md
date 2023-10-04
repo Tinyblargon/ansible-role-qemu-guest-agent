@@ -17,7 +17,7 @@ N/A
 ```yaml
 - hosts: all
   roles:
-    - role: tinyblargon.qemu_guest_agent
+    - role: Tinyblargon.qemu_guest_agent
       vars:
         qemu_guest_agent_state: "present"
 ```
