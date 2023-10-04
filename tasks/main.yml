@@ -17,6 +17,18 @@
     or (qemu_guest_agent_device.stat.exists is defined
     and qemu_guest_agent_device.stat.exists is true)
 
+- name: Ensure qemu-guest-agent is started and enabled
+  ansible.builtin.service:
+    name: "qemu-guest-agent"
+    state: "started"
+    enabled: true
+  become: true
+  when: >-
+    qemu_guest_agent_state == "present"
+    or qemu_guest_agent_state == "latest"
+    or (qemu_guest_agent_device.stat.exists is defined
+    and qemu_guest_agent_device.stat.exists is true)
+
 - name: Ensure qemu-guest-agent is not installed
   ansible.builtin.package:
     name: "qemu-guest-agent"
