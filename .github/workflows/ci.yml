@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: 'tinyblargon.qemu_guest_agent'
 
@@ -39,16 +39,15 @@ jobs:
     strategy:
       matrix:
         distro:
+          - ubuntu2404
           - ubuntu2204
           - ubuntu2004
-          - ubuntu1804
           - debian12
           - debian11
-          - debian10
 
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: 'tinyblargon.qemu_guest_agent'
 
