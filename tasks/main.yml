@@ -1,9 +1,9 @@
 ---
-- name: Check if guest agent is availible
+- name: Check if guest agent is available
   ansible.builtin.stat:
     path: "/dev/virtio-ports"
   register: qemu_guest_agent_device
-  when: qemu_guest_agent_state == "detect"
+  when: qemu_guest_agent_state in ["auto", "detect", "present-auto"]
 
 - name: Ensure qemu-guest-agent is installed
   ansible.builtin.apt:
@@ -37,4 +37,5 @@
   when: >-
     qemu_guest_agent_state == "absent" or
     (qemu_guest_agent_device.stat.exists is defined
-    and qemu_guest_agent_device.stat.exists is false)
+    and qemu_guest_agent_device.stat.exists is false
+    and qemu_guest_agent_state in ["auto", "detect"])
