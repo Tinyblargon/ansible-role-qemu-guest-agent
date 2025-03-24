@@ -5,7 +5,7 @@ galaxy_info:
   author: Tinyblargon
   description: Ansible role to install qemu-guest-agent.
   license: MIT
-  min_ansible_version: '2.14.1'
+  min_ansible_version: "2.14.1"
   platforms:
     - name: Debian
       versions:
@@ -14,9 +14,9 @@ galaxy_info:
         - bookworm
     - name: Ubuntu
       versions:
-        - bionic
-        - focal
+        - noble
         - jammy
+        - focal
   galaxy_tags:
     - qemu
     - guest
