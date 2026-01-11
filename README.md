@@ -1,5 +1,7 @@
 # Ansible Role: qemu_guest_agent
 
+[![CI](https://github.com/Tinyblargon/ansible-role-qemu-guest-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Tinyblargon/ansible-role-qemu-guest-agent)
+
 Ansible Role for installing qemu-guest-agent.
 
 ## Requirements
